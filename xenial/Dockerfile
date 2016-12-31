@@ -60,4 +60,4 @@ RUN addgroup --system nginx \
 
 EXPOSE 80 443
 
-CMD ["/usr/sbin/nginx"]
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
