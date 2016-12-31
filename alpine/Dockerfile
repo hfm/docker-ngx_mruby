@@ -51,7 +51,7 @@ RUN addgroup -S nginx \
       && cd /usr/src/ngx_mruby \
       && sh build.sh \
       && make install \
-      && rm -rf /usr/local/src/ngx_mruby
+      && rm -rf /usr/local/src/ngx_mruby \
       && apk del .build-deps
 
 EXPOSE 80 443
