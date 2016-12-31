@@ -45,12 +45,14 @@ ENV NGX_MRUBY_VERSION v1.18.7
 
 RUN addgroup -S nginx \
       && adduser -D -S -h /etc/nginx -s /sbin/nologin -g nginx -G nginx nginx \
-      && apk add --no-cache --virtual .build-deps gcc make libc-dev linux-headers pcre-dev zlib-dev openssl-dev git ruby-rake bison \
+      && apk add --no-cache libcrypto1.0 libssl1.0 pcre-dev zlib-dev \
+      && apk add --no-cache --virtual .build-deps gcc make libc-dev linux-headers openssl-dev git ruby-rake bison \
       && mkdir -p /usr/src \
       && git clone --depth=1 --branch=$NGX_MRUBY_VERSION https://github.com/matsumoto-r/ngx_mruby.git /usr/src/ngx_mruby \
       && cd /usr/src/ngx_mruby \
       && sh build.sh \
       && make install \
+      && install -o nginx -g nginx -d /var/cache/nginx \
       && rm -rf /usr/local/src/ngx_mruby \
       && apk del .build-deps
 
