@@ -58,8 +58,4 @@ RUN addgroup -S nginx \
 
 EXPOSE 80 443
 
-ONBUILD ADD docker/hook.d /etc/nginx/hook.d
-ONBUILD ADD docker/conf.d /etc/nginx/conf.d
-ONBUILD ADD docker/nginx.conf /etc/nginx/nginx.conf
-
 CMD ["/usr/sbin/nginx"]
