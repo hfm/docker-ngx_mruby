@@ -1,9 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER OKUMURA Takahiro <hfm.garden@gmail.com>
 
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get -qq update && apt-get --no-install-recommends -qq install git wget g++ make rake bison libxml2-dev libssl-dev libpcre3 libpcre3-dev
-
 ENV NGINX_CONFIG_OPT_ENV \
       --prefix=/etc/nginx \
       --sbin-path=/usr/sbin/nginx \
@@ -43,11 +40,13 @@ ENV NGINX_CONFIG_OPT_ENV \
       --with-stream_ssl_preread_module
 
 ENV NGX_MRUBY_VERSION v1.18.7
-RUN git clone --depth=1 --branch=$NGX_MRUBY_VERSION https://github.com/matsumoto-r/ngx_mruby.git /usr/local/src/ngx_mruby \
-                      && cd /usr/local/src/ngx_mruby \
-                      && sh build.sh \
-                      && make install \
-                      && rm -rf /usr/local/src/ngx_mruby
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get -qq update && apt-get --no-install-recommends -qq install git wget g++ make rake bison libxml2-dev libssl-dev libpcre3 libpcre3-dev \
+      && git clone --depth=1 --branch=$NGX_MRUBY_VERSION https://github.com/matsumoto-r/ngx_mruby.git /usr/local/src/ngx_mruby \
+      && cd /usr/local/src/ngx_mruby \
+      && sh build.sh \
+      && make install \
+      && rm -rf /usr/local/src/ngx_mruby /var/lib/apt/lists/*
 
 EXPOSE 80 443
 
