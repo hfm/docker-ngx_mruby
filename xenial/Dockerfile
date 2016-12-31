@@ -15,6 +15,8 @@ ENV NGINX_CONFIG_OPT_ENV \
       --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
       --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
       --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+      --user=nginx \
+      --group=nginx \
       --with-file-aio \
       --with-threads \
       --with-http_addition_module \
@@ -41,7 +43,13 @@ ENV NGINX_CONFIG_OPT_ENV \
 
 ENV NGX_MRUBY_VERSION v1.18.7
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get -qq update && apt-get --no-install-recommends -qq install git wget g++ make rake bison libxml2-dev libssl-dev libpcre3 libpcre3-dev \
+
+RUN addgroup --system nginx \
+      && adduser --system --disabled-password --no-create-home --gecos "nginx user" --ingroup nginx nginx \
+      && adduser --system --disabled-password --no-create-home --home /nonexistent --gecos "nginx user" --ingroup nginx nginx \
+      && apt-get -qq update \
+      && build_deps="git wget g++ make rake bison libxml2-dev libpcre3-dev" \
+      && apt-get --no-install-recommends -qq install $build_deps libssl-dev libpcre3 \
       && git clone --depth=1 --branch=$NGX_MRUBY_VERSION https://github.com/matsumoto-r/ngx_mruby.git /usr/local/src/ngx_mruby \
       && cd /usr/local/src/ngx_mruby \
       && sh build.sh \
