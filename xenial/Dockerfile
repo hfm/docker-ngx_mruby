@@ -58,7 +58,9 @@ RUN addgroup --system nginx \
       && mkdir -p /etc/nginx/conf.d \
       && install -o nginx -g nginx -d /var/cache/nginx \
       && rm -rf /usr/local/src/ngx_mruby /var/lib/apt/lists/* \
-      && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $build_deps
+      && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $build_deps \
+      && ln -sf /dev/stdout /var/log/nginx/access.log \
+      && ln -sf /dev/stderr /var/log/nginx/error.log
 
 
 COPY nginx.conf /etc/nginx/nginx.conf

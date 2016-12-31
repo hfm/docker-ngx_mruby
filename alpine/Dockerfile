@@ -56,7 +56,9 @@ RUN addgroup -S nginx \
       && mkdir -p /etc/nginx/conf.d \
       && install -o nginx -g nginx -d /var/cache/nginx \
       && rm -rf /usr/local/src/ngx_mruby \
-      && apk del .build-deps
+      && apk del .build-deps \
+      && ln -sf /dev/stdout /var/log/nginx/access.log \
+      && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.default.conf /etc/nginx/conf.d/default.conf
