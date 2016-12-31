@@ -52,9 +52,14 @@ RUN addgroup -S nginx \
       && cd /usr/src/ngx_mruby \
       && sh build.sh \
       && make install \
+      && rm -rf /etc/nginx/html \
+      && mkdir -p /etc/nginx/conf.d \
       && install -o nginx -g nginx -d /var/cache/nginx \
       && rm -rf /usr/local/src/ngx_mruby \
       && apk del .build-deps
+
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80 443
 

@@ -54,9 +54,15 @@ RUN addgroup --system nginx \
       && cd /usr/local/src/ngx_mruby \
       && sh build.sh \
       && make install \
+      && rm -rf /etc/nginx/html \
+      && mkdir -p /etc/nginx/conf.d \
       && install -o nginx -g nginx -d /var/cache/nginx \
       && rm -rf /usr/local/src/ngx_mruby /var/lib/apt/lists/* \
       && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $build_deps
+
+
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80 443
 
