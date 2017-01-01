@@ -34,8 +34,6 @@ ENV NGINX_CONFIG_OPT_ENV \
       --with-http_stub_status_module \
       --with-http_sub_module \
       --with-http_v2_module \
-      --with-mail \
-      --with-mail_ssl_module \
       --with-stream \
       --with-stream_realip_module \
       --with-stream_ssl_module \
