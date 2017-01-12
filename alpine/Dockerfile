@@ -34,7 +34,7 @@ ENV NGINX_CONFIG_OPT_ENV \
       --with-stream_ssl_module \
       --with-stream_ssl_preread_module
 
-ENV NGX_MRUBY_VERSION v1.18.7
+ENV NGX_MRUBY_VERSION v1.18.8
 
 RUN addgroup -S nginx \
       && adduser -D -S -h /etc/nginx -s /sbin/nologin -g nginx -G nginx nginx \
