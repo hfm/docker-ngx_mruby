@@ -34,7 +34,7 @@ ENV NGINX_CONFIG_OPT_ENV \
       --with-stream_ssl_module \
       --with-stream_ssl_preread_module
 
-ENV NGX_MRUBY_VERSION v1.18.8
+ENV NGX_MRUBY_VERSION v1.18.9
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN addgroup --system nginx \
